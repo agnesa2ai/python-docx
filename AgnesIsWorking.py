@@ -1,10 +1,5 @@
 # clone git repo
-# https://github.com/python-openxml/python-docx?tab=readme-ov-file
-
-#start recording time
-import time
-start = time.time()
-
+    # https://github.com/python-openxml/python-docx?tab=readme-ov-file
 
 #command line: pip install python-docx
 import os
@@ -17,7 +12,7 @@ from docx.enum.text import WD_BREAK
 
 
 #bring in shell 
-document = Document('pre.docx')
+document = Document('python-docx/pre.docx')
 
 #establish a pattern to magic string ..///
 start_pattern = r'\.\.///'
@@ -33,7 +28,7 @@ for par in document.paragraphs:
         for match in matches:
             match_index = par.text.find(match) #locates a magic string based on start_pattern
             figure_name = par.text[match_index + len(match):] #extracts the figure name from the magic string
-            figure_location_and_name = ("images/" + figure_name)  #can change "images" later. but don't know if necessary
+            figure_location_and_name = ("python-docx/images/" + figure_name)  #can change "images" later. but don't know if necessary
             magic_matches = magic_pattern.findall(par.text) #relocates magic string this time from start_pattern to end_pattern 
             for match in magic_matches:
                 par.text = par.text.replace(match, "")
@@ -45,7 +40,3 @@ for par in document.paragraphs:
 #render out draft
 document.save('post.docx')
 
-#end recording time 
-end = time.time()
-print("The time of execution of above program is :",
-      (end-start) * 10**3, "ms")
