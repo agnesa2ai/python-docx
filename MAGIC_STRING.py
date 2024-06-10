@@ -1,6 +1,4 @@
-# cloned git repo from: https://github.com/python-openxml/python-docx?tab=readme-ov-file
-
-
+# cloned library from: https://github.com/python-openxml/python-docx?tab=readme-ov-file
 
 #run in terminal: pip install python-docx
 import os
