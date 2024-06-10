@@ -1,7 +1,12 @@
 # clone git repo
 # https://github.com/python-openxml/python-docx?tab=readme-ov-file
 
-#pip install python-docx
+#start recording time
+import time
+start = time.time()
+
+
+#command line: pip install python-docx
 import os
 import re
 import docx
@@ -24,20 +29,23 @@ magic_pattern = re.compile(start_pattern + '.*?' + end_pattern)
 document.paragraphs  # to extract paragraphs
 for par in document.paragraphs: 
     matches = re.findall(start_pattern, par.text)
-    print (matches)
     if matches:
         for match in matches:
-            match_index = par.text.find(match) 
-            figure_name = par.text[match_index + len(match):]
+            match_index = par.text.find(match) #locates a magic string based on start_pattern
+            figure_name = par.text[match_index + len(match):] #extracts the figure name from the magic string
             figure_location_and_name = ("images/" + figure_name)  #can change "images" later. but don't know if necessary
-            magic_matches = magic_pattern.findall(par.text) #pattern search
+            magic_matches = magic_pattern.findall(par.text) #relocates magic string this time from start_pattern to end_pattern 
             for match in magic_matches:
                 par.text = par.text.replace(match, "")
             r = par.add_run('')  
             r.add_picture(figure_location_and_name, width=Inches(2)) #inserting image 
             rr = par.add_run('\n')
             rr.add_text('Source: ' + figure_location_and_name) #inserting source path as text
-
             
 #render out draft
 document.save('post.docx')
+
+#end recording time 
+end = time.time()
+print("The time of execution of above program is :",
+      (end-start) * 10**3, "ms")
